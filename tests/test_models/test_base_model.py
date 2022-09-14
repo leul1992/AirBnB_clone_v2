@@ -7,8 +7,9 @@ from uuid import UUID
 import json
 import os
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                 'using database skip')
+                 'if using database skip this')
 class test_basemodel(unittest.TestCase):
     """ """
 
@@ -20,12 +21,12 @@ class test_basemodel(unittest.TestCase):
 
     def setUp(self):
         """ """
-        pass
+        od.environ['HBNB_TYPE_STORAGE'] = 'file_storage'
 
     def tearDown(self):
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_default(self):
