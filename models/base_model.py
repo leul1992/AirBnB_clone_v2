@@ -29,14 +29,30 @@ class BaseModel:
             *args (any): Unused.
             **kwargs (dict): Key/value pairs of attributes.
         """
-        self.id = str(uuid4())
-        self.created_at = self.updated_at = datetime.utcnow()
-        if kwargs:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != "__class__":
-                    setattr(self, key, value)
+        if not kwargs:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+        else:
+            # Add an id if there's no id included in kwargs
+            if 'id' not in kwargs.keys():
+                kwargs['id'] = str(uuid4())
+
+            if 'created_at' not in kwargs.keys():
+                kwargs['created_at'] = datetime.now()
+            else:
+                kwargs['created_at'] = datetime.strptime(
+                    kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+
+            if 'updated_at' not in kwargs.keys():
+                kwargs['updated_at'] = datetime.now()
+            else:
+                kwargs['updated_at'] = datetime.strptime(
+                    kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
+            self.__dict__.update(kwargs)
 
     def save(self):
         """Update updated_at with the current datetime."""
