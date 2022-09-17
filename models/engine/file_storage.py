@@ -17,7 +17,11 @@ class FileStorage:
         '''
             Return the dictionary
         '''
-        return self.__objects
+        objs = FileStorage.__objects
+        if cls is not None:
+            objs = {k: v for k, v in FileStorage.__objects.items()
+                    if v.__class__ is cls}
+        return objs
 
     def new(self, obj):
         '''
