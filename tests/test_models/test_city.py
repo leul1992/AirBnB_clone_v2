@@ -19,6 +19,7 @@ class test_City(test_basemodel):
         """ """
         new = self.value()
         self.assertEqual(type(new.state_id), str)
+
     @unittest.expectedFailure
     def test_name(self):
         """ """

@@ -57,8 +57,7 @@ class test_basemodel(unittest.TestCase):
             j = json.load(f)
             self.assertEqual(j[key], i.to_dict())
 
-    # @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "Doesn't apply"
-            #  "for database storage, only for file storage")
+
     @unittest.expectedFailure
     def test_str(self):
         """ """
