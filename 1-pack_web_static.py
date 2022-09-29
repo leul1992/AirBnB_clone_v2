@@ -3,6 +3,7 @@
 from fabric.api import local
 from datetime import datetime
 
+
 def do_pack():
     """script generates .tgz archive form web_static content"""
     date = datetime.now().strftime('%Y%m%d%H%M%S')
