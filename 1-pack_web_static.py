@@ -9,7 +9,7 @@ def do_pack():
     date = datetime.now().strftime('%Y%m%d%H%M%S')
     file_name = 'versions/web_static_{}.tgz'.format(date)
     local('mkdir -p versions/')
-    gen = local('tar -cvf {} web_static'.format(file_name))
+    gen = local('tar -cvzf {} web_static'.format(file_name))
     if (gen.succeeded):
         return file_name
     else:
