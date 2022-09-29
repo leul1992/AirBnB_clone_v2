@@ -9,5 +9,5 @@ def do_pack():
     file_path = 'versions/web_static_{}.tgz'.format(date)
     local('mkdir /versions/')
     gen = local('tar -cvzf {} web_static'.format(file_path))
-    if gen.succeeded):
+    if gen.succeeded:
         return file_path
