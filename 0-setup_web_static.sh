@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # sets up web servers for the deployment of web_static
-sudo -y apt-get update
-sudo -y apt-get install nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Ngnix HTTP'
 mkdir -p /data/web_static/releases/test/
 mkdir -p /data/web_static/shared/
 echo "This is a test for nginx configuration" > /data/web_static/releases/test/index.html
