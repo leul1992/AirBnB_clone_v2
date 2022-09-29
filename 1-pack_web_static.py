@@ -10,6 +10,6 @@ def do_pack():
     local('mkdir -p versions/')
     gen = local('tar -cvzf {} web_static'.format(file_name))
     if (gen.succeeded):
-        return file_path
+        return file_name
     else:
         return None
