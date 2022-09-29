@@ -7,7 +7,9 @@ def do_pack():
     """script generates .tgz archive form web_static content"""
     date = datetime.now().strftime('%Y%m%d%H%M%S')
     file_path = 'versions/web_static_{}.tgz'.format(date)
-    local('mkdir /versions/')
+    local('mkdir -p /versions/')
     gen = local('tar -cvzf {} web_static'.format(file_path))
     if gen.succeeded:
         return file_path
+    else:
+        return None
