@@ -4,15 +4,16 @@ import unittest
 from models.base_model import BaseModel
 from models import storage
 import os
+from unittest import TestCase
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                 'using database skip')
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'if using database skip this')
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
 
     def setUp(self):
         """ Set up test environment """
+        os.putenv('HBNB_MYSQL_TYPE', 'file')
         del_list = []
         for key in storage._FileStorage__objects.keys():
             del_list.append(key)
@@ -23,7 +24,7 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
@@ -33,11 +34,12 @@ class test_fileStorage(unittest.TestCase):
     @unittest.expectedFailure
     def test_new(self):
         """ New object is correctly added to __objects """
+         if (os.getenv('HBNB_TYPE_STORAGE') == 'db'):
+            return True
         new = BaseModel()
         for obj in storage.all().values():
             temp = obj
         self.assertTrue(temp is obj)
-
     def test_all(self):
         """ __objects is properly returned """
         new = BaseModel()
