@@ -1,41 +1,55 @@
 #!/usr/bin/python3
-""" Starts a Flask web application """
+""" script that starts a Flask web application:
+    Your web application must be listening on 0.0.0.0, port 5000
+    Routes: 1- /: display “Hello HBNB!”
+            2- /hbnb: display “HBNB”
+            3- /c/<text>: display “C ” followed by the value of the text
+                variable (replace underscore _ symbols with a space )
+            4- /python/(<text>): display “Python ”, followed by the value of...
+                the text variable (replace underscore _ symbols with a space )
+                The default value of text is “is cool”
+            5- /number/<n>: display “n is a number” only if n is an integer
+    You must use the option strict_slashes=False in your route definition """
 from flask import Flask
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello_hbn():
-    """ Returns Hello HBNB! from 0.0.0.0:5000 """
-    return "Hello HBNB!"
+def hello_hbnb():
+    """ hello_hbnb method """
+    return ('Hello HBNB!')
 
 
 @app.route('/hbnb', strict_slashes=False)
-def hbnb():
-    """ Returns HBNB from 0.0.0.0:5000/hbnb """
-    return "HBNB"
+def only_hbnb():
+    """ only_hbnb method: """
+    return ('HBNB')
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def c_route(text):
-    """ Returns C followed by the value of text """
+def only_c(text):
+    """ only_c method: route to return C followed by text variable, replaces _
+        with spaces """
     text = text.replace('_', ' ')
-    return "C {}".format(text)
+    return ('C' + ' ' + text)
 
 
 @app.route('/python', strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def python_route(text="is cool"):
-    """ Returns Python followed by the vale of the text """
-    text = text.replace('_', ' ')
-    return "Python {}".format(text)
+@app.route('/python/<path:text>', strict_slashes=False)
+def only_python(text=None):
+    """ only_python method: route to return text follow by "is cool"
+        (can be overwritten), replaces _ with spaces """
+    if text is None:
+        text = 'is cool'
+    else:
+        text = text.replace('_', ' ')
+    return ('Python' + ' ' + text)
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def number_route(n):
-    """ Returns n is a number if n is an integer """
-    return "{} is a number".format(n)
-
+def number_int(n):
+    """  number_int method: display “n is a number” only if n is an integer """
+    return ('{:d} is a number'.format(n))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)
