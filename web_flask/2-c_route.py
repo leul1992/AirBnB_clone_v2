@@ -16,6 +16,7 @@ def pri2():
 
 @app.route('/c/<text>')
 def pri3(text):
+    text = text.replace('_', ' ')
     return "C %s" % text
 
 
